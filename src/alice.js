@@ -226,7 +226,7 @@ void function (){
                 plug = plug.slice(-3);
 
                 if (plug == "net") loadFn = loadNetJs;
-                else if (plug == "cmb")loadFn = loadCmbJs;
+                else if (plug == "cmb") loadFn = loadCmbJs;
                 file = file.slice(0, -4);
             }
         }
@@ -255,7 +255,7 @@ void function (){
 
         var fileDefers = [];
 
-        for (var i=0, len=files.length, paht, absPath, defer; i<len; i++){
+        for (var i=0, len=files.length, path, absPath, defer; i<len; i++){
             path = files[i];
             defer = load(path);
             if (defer) fileDefers = fileDefers.concat(defer);
