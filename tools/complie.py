@@ -42,13 +42,23 @@ def compile():
     compileTime = datetime.now().strftime("%Y%m%d%H%M%S")
     for root, dirs, files in os.walk(srcPath):
         for dir in dirs:
+            if dir[0] == "." : continue
+
             dirPath = os.path.join(root, dir)
+            if dirPath.find("/.svn/") != -1 : continue
+            if dirPath.find("/.git/") != -1 : continue
+            
             binDirPath = rootPath+"/bin"+ dirPath[len(srcPath):]
             if not os.path.exists(binDirPath):
                 os.mkdir(binDirPath)
             
         for file in files:
             if file[0] == "." : continue
+
+            filePath = os.path.join(root, file)
+            if filePath.find("/.svn/") != -1 : continue
+            if filePath.find("/.git/") != -1 : continue
+
             extension = os.path.splitext(file)[1]
             if extension not in [".js", ".css"] : continue
             

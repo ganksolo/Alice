@@ -132,6 +132,7 @@ void function (){
     };
 
     var loadJs = function (js){
+        js = getAbsolutePath(js);
         var msg = regist(loadJs, js);
         if (msg.isCache) return msg.defer;
 
@@ -153,6 +154,7 @@ void function (){
     };
 
     var loadNetJs = function (netJs){
+        netJs = getAbsolutePath(netJs);
         var msg = regist(loadNetJs, netJs);
         if (msg.isCache) return msg.defer;
         
@@ -165,8 +167,32 @@ void function (){
 
         return msg.defer;
     };
+    
+    var loadCmbJs = function (cmbJs){
+        if ( (typeof aliceCmbConf == "undefined") || (!(cmbJs in aliceCmbConf)) ){
+            log("合并文件配置缺失！");
+            return;
+        }
+
+        var files = aliceCmbConf[cmbJs];
+        cmbJs = getAbsolutePath("cmb/"+cmbJs);
+        
+        var msg = regist(loadCmbJs, cmbJs);
+        if (msg.isCache) return msg.defer;
+
+        createScript(cmbJs);
+        var fileDefers = [];
+
+        for (var i=0, len=files.length; i<len; i++){
+            var absFile = getAbsolutePath(files[i]);
+            fileDefers.push(regist(loadJs, absFile).defer);
+        }
+
+        return fileDefers;
+    };
 
     var loadCss = function (css){
+        css = getAbsolutePath(css);
         var msg = regist(loadCss, css);
         if (msg.isCache) return msg.defer;
 
@@ -194,8 +220,13 @@ void function (){
         }
         else if (/\.js/.test(file)){
             loadFn = loadJs;
-            if (file.slice(-4) == "#net"){
-                loadFn = loadNetJs;
+
+            var plug = file.slice(-4);
+            if (plug.charAt(0) == "#"){
+                plug = plug.slice(-3);
+
+                if (plug == "net") loadFn = loadNetJs;
+                else if (plug == "cmb")loadFn = loadCmbJs;
                 file = file.slice(0, -4);
             }
         }
@@ -226,8 +257,7 @@ void function (){
 
         for (var i=0, len=files.length, paht, absPath, defer; i<len; i++){
             path = files[i];
-            absPath = getAbsolutePath(path);
-            defer = load(absPath);
+            defer = load(path);
             if (defer) fileDefers = fileDefers.concat(defer);
         }
         
@@ -242,7 +272,7 @@ void function (){
             return rootPath + "/src/" + path;
         }
         else {
-            var version = aliceVerConf[path.split("#")[0]];
+            var version = aliceVerConf[path];
             var pathTemp = path.split(".");
             return rootPath + "/bin/" + pathTemp[0] + "_" + version + "." + pathTemp[1];
         }

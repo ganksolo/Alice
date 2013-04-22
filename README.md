@@ -5,6 +5,6 @@
 
 二、文件更新机制(版本号控制done)
 
-三、文件合并(undergoing)
+三、文件合并(done)
 
 四、文件压缩(undergoing)
