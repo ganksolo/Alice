@@ -26,25 +26,25 @@ Alice.use(["file.js"], function (require){
 
 <h2>二：目录结构和编译</h2>
 sta
-----src(源文件:必须)
---------cmbConf(合并文件配置:可选配置)
---------cmb(合并文件目录:此目录可由编译工具生成)
---------script
---------css
-----tools(编译工具:必须)
---------combine.py(合并文件)
---------complie.py(编译出带版本号的文件)
-----bin(编译后文件:由编译工具生成)
-----conf(编译结果目录:由编译工具生成)
---------verConf(缓存上次的编译结果)
---------verConf_time.js(文件版本号信息)
---------cmbConf_time.js(文件合并信息)
+----src(源文件:必须)<br/>
+--------cmbConf(合并文件配置:可选配置)<br/>
+--------cmb(合并文件目录:此目录可由编译工具生成)<br/>
+--------script<br/>
+--------css<br/>
+----tools(编译工具:必须)<br/>
+--------combine.py(合并文件)<br/>
+--------complie.py(编译出带版本号的文件)<br/>
+----bin(编译后文件:由编译工具生成)<br/>
+----conf(编译结果目录:由编译工具生成)<br/>
+--------verConf(缓存上次的编译结果)<br/>
+--------verConf_time.js(文件版本号信息)<br/>
+--------cmbConf_time.js(文件合并信息)<br/>
 
 <p>其中src目录和tools目录是必须的，由开发人员创建。编译时候先执行combine.py把src/cmbConf配置中需要合并的文件合并到src/cmb目录中，然后complie.py会把src中所有的js,css文件
 编译到bin目录的相同位置。编译工具使用python2.6以上版本，但不要使用python3。</p>
 
 <h2>使用步骤：</h2>
 <p>比如现在你所有的静态文件都在sta文件夹目录下，首先在文件头手动引入三个文件，sta/conf/verConf_time.js、sta/conf/cmbConf_time.js、sta/bin/script/alice_time.js。然后
-用Alice.setRootPath("http://zhangdongdong02.fe.baidu.com/voicedebug/sta")设置sta的绝对路径，那么Alice.use("script/main.js")就可以正确找到bin目录下相应的main_time.js。</p>
+用Alice.setRootPath("zhangdongdong02.fe.baidu.com/voicedebug/sta")设置sta的绝对路径，那么Alice.use("script/main.js")就可以正确找到bin目录下相应的main_time.js。</p>
 
 
