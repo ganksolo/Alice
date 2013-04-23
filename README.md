@@ -43,11 +43,11 @@ sta<br/>
 <p>其中src目录和tools目录是必须的，由开发人员创建。编译时候先执行combine.py把src/cmbConf配置中需要合并的文件合并到src/cmb目录中，然后complie.py会把src中所有的js,css文件
 编译到bin目录的相同位置。编译工具使用python2.6以上版本，但不要使用python3。</p>
 
-<h2>使用步骤：</h2>
-<p>比如现在你所有的静态文件都在sta文件夹目录下，首先在文件头手动引入三个文件，sta/conf/verConf_time.js、sta/conf/cmbConf_time.js、sta/bin/script/alice_time.js。然后
-用Alice.setRootPath("zhangdongdong02.fe.baidu.com/voicedebug/sta")设置sta的绝对路径，那么Alice.use("script/main.js")就可以正确找到bin目录下相应的main_time.js。</p>
-
 <h2>三：文件压缩</h2>
 <p>压缩功能本身和Alice编译系统没有必要的联系，大家可以自选压缩工具，比如uglify，将bin目录中的所有文件压缩即可。</p>
+
+<h2>四：使用步骤：</h2>
+<p>比如现在你所有的静态文件都在sta文件夹目录下，首先在文件头手动引入三个文件，sta/conf/verConf_time.js、sta/conf/cmbConf_time.js、sta/bin/script/alice_time.js。然后
+用Alice.setRootPath("zhangdongdong02.fe.baidu.com/voicedebug/sta")设置sta的绝对路径，那么Alice.use("script/main.js")就可以正确找到bin目录下相应的main_time.js。</p>
 
 
