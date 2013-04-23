@@ -1,0 +1,8 @@
+{"android.js":[
+    "script/android.js",
+    "script/com.js",
+    "script/mark.js",
+    "script/qfile.js",
+    "script/queryId.js",
+    "script/search.js"
+]}
