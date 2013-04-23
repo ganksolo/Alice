@@ -25,19 +25,17 @@ Alice.use(["file.js"], function (require){
 </div>
 
 <h2>二：目录结构和编译</h2>
+
 sta<br/>
     src(源文件:必须)<br/>
         cmbConf(合并文件配置:可选配置)<br/>
         cmb(合并文件目录:此目录可由编译工具生成)<br/>
         script<br/>
         css<br/>
-        
     tools(编译工具:必须)<br/>
         combine.py(合并文件)<br/>
         complie.py(编译出带版本号的文件)<br/>
-        
     bin(编译后文件:由编译工具生成)<br/>
-    
     conf(编译结果目录:由编译工具生成)<br/>
         verConf(缓存上次的编译结果)<br/>
         verConf_time.js(文件版本号信息)<br/>
