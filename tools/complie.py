@@ -7,11 +7,21 @@ import json
 from datetime import datetime
 from hashlib import md5
 
+def getMd5(str):
+    m = md5()
+    m.update(str)
+    return m.hexdigest()
+
+def getVerConfJs(confDir):
+    for f in os.listdir(confDir):
+        if f.find("verConf_")!=-1: return os.path.join(confDir, f)
+    
+    return None
+
 def compile():
     verConf = {}
     varConfPath = None
     varConfJS = {}
-    varConfJSPath = None
 
     toolPath = os.getcwd()
     rootPath = os.path.split(toolPath)[0]
@@ -32,7 +42,6 @@ def compile():
     
     # 读取上一次编译结果
     varConfPath = os.path.join(confPath, "verConf")
-    varConfJSPath = os.path.join(confPath, "verConf.js")
 
     if os.path.isfile(varConfPath):
         f = open(varConfPath, "r")
@@ -64,9 +73,7 @@ def compile():
             
             filePath = os.path.join(root, file)
             fileContent = open(filePath).read()
-            m = md5()
-            m.update(fileContent)
-            md5Str = m.hexdigest()
+            md5Str = getMd5(fileContent)
 
             if (filePath not in verConf) or (verConf[filePath]["md5"] != md5Str):
                 verConf[filePath] = {"md5":md5Str, "ver":compileTime}
@@ -85,8 +92,18 @@ def compile():
         jsPath = filePath[len(srcPath)+1:]
         varConfJS[jsPath] = verConf[filePath]["ver"]
     
-    with open(varConfJSPath, "w") as f:
-        f.write("var aliceVerConf = " + json.dumps(varConfJS) + ";")
+    varConfJSPath = getVerConfJs(confPath)
+    jsContent = "var aliceVerConf = " + json.dumps(varConfJS) + ";"
+
+    #如果存在旧配置
+    if varConfJSPath:
+        if getMd5(jsContent) != getMd5(open(varConfJSPath).read()):
+            with open(confPath + "/verConf_" + compileTime + ".js", "w") as f:
+                f.write(jsContent)
+            os.remove(varConfJSPath)
+    else:
+        with open(confPath + "/verConf_" + compileTime + ".js", "w") as f:
+            f.write(jsContent)
 
 if __name__ == "__main__":
     compile()

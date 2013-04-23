@@ -1,11 +1,25 @@
 #!/usr/local/bin/python2.6
 #-*-coding:utf8-*-
-#read:compile src files to bin
+#read:combine files
 
 import os
 import json
+from datetime import datetime
+from hashlib import md5
+
+def getMd5(str):
+    m = md5()
+    m.update(str)
+    return m.hexdigest()
+
+def getCmbConfJs(confDir):
+    for f in os.listdir(confDir):
+        if f.find("cmbConf_")!=-1: return os.path.join(confDir, f)
+    
+    return None
 
 def combine():
+    combineTime = datetime.now().strftime("%Y%m%d%H%M%S")
     toolPath = os.getcwd()
     rootPath = os.path.split(toolPath)[0]
     
@@ -47,8 +61,18 @@ def combine():
         with open(cmbFilePath, "w") as f:
             f.write("\n".join(fileContents))
 
-    with open(os.path.join(confPath, "cmbConf.js"), "w") as f:
-        f.write("var aliceCmbConf = " + cmbConfContent + ";")
+
+    cmbConfJsPath = getCmbConfJs(confPath)
+    jsContent = "var aliceCmbConf = " + cmbConfContent + ";"
+
+    if cmbConfJsPath:
+        if getMd5(jsContent) != getMd5(open(cmbConfJsPath).read()):
+            with open(confPath + "/cmbConf_" + combineTime + ".js", "w") as f:
+                f.write(jsContent)
+            os.remove(cmbConfJsPath)
+    else:
+        with open(confPath + "/cmbConf_" + combineTime + ".js", "w") as f:
+            f.write(jsContent)
 
 if __name__ == "__main__":
     combine()
