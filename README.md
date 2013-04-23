@@ -25,7 +25,7 @@ Alice.use(["file.js"], function (require){
 </div>
 
 <h2>二：目录结构和编译</h2>
-sta
+sta<br/>
 ----src(源文件:必须)<br/>
 --------cmbConf(合并文件配置:可选配置)<br/>
 --------cmb(合并文件目录:此目录可由编译工具生成)<br/>
