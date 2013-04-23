@@ -25,7 +25,7 @@ Alice.use(["file.js"], function (require){
 </div>
 
 <h2>二：目录结构和编译</h2>
-
+<pre><code>
 sta<br/>
     src(源文件:必须)<br/>
         cmbConf(合并文件配置:可选配置)<br/>
@@ -40,7 +40,7 @@ sta<br/>
         verConf(缓存上次的编译结果)<br/>
         verConf_time.js(文件版本号信息)<br/>
         cmbConf_time.js(文件合并信息)<br/>
-
+</code></pre>
 <p>其中src目录和tools目录是必须的，由开发人员创建。编译时候先执行combine.py把src/cmbConf配置中需要合并的文件合并到src/cmb目录中，然后complie.py会把src中所有的js,css文件
 编译到bin目录的相同位置。编译工具使用python2.6以上版本，但不要使用python3。</p>
 
