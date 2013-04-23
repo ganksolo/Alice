@@ -47,7 +47,7 @@ sta<br/>
 <p>比如现在你所有的静态文件都在sta文件夹目录下，首先在文件头手动引入三个文件，sta/conf/verConf_time.js、sta/conf/cmbConf_time.js、sta/bin/script/alice_time.js。然后
 用Alice.setRootPath("zhangdongdong02.fe.baidu.com/voicedebug/sta")设置sta的绝对路径，那么Alice.use("script/main.js")就可以正确找到bin目录下相应的main_time.js。</p>
 
-<h3三：文件压缩</h3>
+<h2>三：文件压缩</h2>
 <p>压缩功能本身和Alice编译系统没有必要的联系，大家可以自选压缩工具，比如uglify，将bin目录中的所有文件压缩即可。</p>
 
 
