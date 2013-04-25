@@ -7,9 +7,10 @@ void function (){
         var names = name.split(".");
         var space = window;
 
-        names.forEach(function (n){
+        for (var i=0,len=names.length; i<len; i++){
+            var n = names[i];
             space = space[n] || (space[n] = {});
-        });
+        }
 
         return space;
     };
